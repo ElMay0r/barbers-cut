@@ -1,434 +1,821 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a0f1a">
-<title>Barber's Cut — Meal System</title>
-<link rel="manifest" href="manifest.json">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0a0f1a;
-  --card: #111827;
-  --card-hover: #1a2234;
-  --accent: #22c55e;
-  --accent-dim: #166534;
-  --accent-glow: rgba(34,197,94,0.12);
-  --text: #f1f5f9;
-  --text-dim: #94a3b8;
-  --text-muted: #64748b;
-  --border: #1e293b;
-  --protein: #3b82f6;
-  --carbs: #f59e0b;
-  --fat: #ef4444;
-  --water: #06b6d4;
-  --red: #ef4444;
-  --red-dim: rgba(239,68,68,0.15);
-  --yellow: #f59e0b;
-  --yellow-dim: rgba(245,158,11,0.12);
-  --purple: #a78bfa;
-  --purple-dim: rgba(167,139,250,0.12);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0a0f1a">
+  <title>Barber's Cut — Meal System</title>
+  <link rel="manifest" href="manifest.json">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0f1a;
+      --card: #111827;
+      --card-hover: #1a2234;
+      --accent: #22c55e;
+      --accent-dim: #166534;
+      --accent-glow: rgba(34, 197, 94, 0.12);
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --text-muted: #64748b;
+      --border: #1e293b;
+      --protein: #3b82f6;
+      --carbs: #f59e0b;
+      --fat: #ef4444;
+      --water: #06b6d4;
+      --red: #ef4444;
+      --red-dim: rgba(239, 68, 68, 0.15);
+      --yellow: #f59e0b;
+      --yellow-dim: rgba(245, 158, 11, 0.12);
+      --purple: #a78bfa;
+      --purple-dim: rgba(167, 139, 250, 0.12);
+      --nav-height: 65px;
+      --header-height: 70px;
+    }
 
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', -apple-system, sans-serif;
-  min-height: 100vh;
-  min-height: 100dvh;
-  overflow-x: hidden;
-}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      padding-top: var(--header-height);
+      padding-bottom: calc(var(--nav-height) + 20px);
+    }
 
-.header {
-  background: linear-gradient(135deg, var(--card) 0%, var(--bg) 100%);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 16px 14px;
-}
-.header-inner { max-width: 600px; margin: 0 auto; }
-.header h1 {
-  font-family: 'Space Mono', monospace;
-  font-size: 20px;
-  font-weight: 700;
-}
-.header h1 span { color: var(--accent); }
-.header p {
-  color: var(--text-muted);
-  font-size: 12px;
-  margin-top: 4px;
-  letter-spacing: 0.3px;
-}
+    .header {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-.tabs {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.tabs::-webkit-scrollbar { display: none; }
-.tabs-inner { max-width: 600px; margin: 0 auto; display: flex; padding: 0 8px; }
-.tab {
-  background: none; border: none; padding: 11px 11px; cursor: pointer;
-  color: var(--text-muted); border-bottom: 2px solid transparent;
-  font-size: 12px; font-weight: 600; font-family: 'DM Sans', sans-serif;
-  flex-shrink: 0; transition: all 0.2s;
-}
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .header-inner {
+      flex: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.content { max-width: 600px; margin: 0 auto; padding: 16px 16px 100px; }
+    .header-title-box {
+      display: flex;
+      flex-direction: column;
+    }
 
-h2 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-h3 { font-size: 14px; font-weight: 700; }
+    .header h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: 18px;
+      font-weight: 700;
+    }
 
-.subtitle { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+    .header h1 span {
+      color: var(--accent);
+    }
 
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px;
-  margin-bottom: 8px;
-  transition: all 0.2s;
-}
+    .header p {
+      color: var(--text-muted);
+      font-size: 11px;
+      margin-top: 2px;
+      letter-spacing: 0.3px;
+    }
 
-.card-accent {
-  background: var(--accent-glow);
-  border-color: var(--accent-dim);
-}
+    .clock-widget {
+      text-align: right;
+    }
 
-.card-red {
-  background: var(--red-dim);
-  border-color: rgba(239,68,68,0.25);
-}
+    .clock-time {
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+    }
 
-.card-purple {
-  background: var(--purple-dim);
-  border-color: rgba(167,139,250,0.25);
-}
+    .clock-date {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-.badge {
-  font-size: 11px; font-weight: 600; padding: 3px 8px;
-  border-radius: 6px; display: inline-block;
-}
-.badge-green { color: var(--accent); background: var(--accent-glow); }
-.badge-yellow { color: var(--yellow); background: var(--yellow-dim); }
-.badge-muted { color: var(--text-dim); background: var(--border); }
-.badge-purple { color: var(--purple); background: var(--purple-dim); }
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: rgba(17, 24, 39, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
 
-.macro-row { display: flex; gap: 10px; font-size: 11px; margin-top: 6px; flex-wrap: wrap; }
-.macro-p { color: var(--protein); }
-.macro-c { color: var(--carbs); }
-.macro-f { color: var(--fat); }
-.macro-s { color: var(--red); font-weight: 600; }
+    .bottom-nav-inner {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+      height: 100%;
+    }
 
-.bar-wrap { margin-bottom: 10px; }
-.bar-label { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 12px; }
-.bar-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
+    .nav-item {
+      background: none;
+      border: none;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+      height: 100%;
+    }
 
-.swap-header { cursor: pointer; padding: 14px; display: flex; justify-content: space-between; align-items: center; }
-.swap-detail { padding: 0 14px 14px; border-top: 1px solid var(--border); padding-top: 10px; }
-.swap-tip { font-size: 12px; color: var(--text-dim); line-height: 1.6; background: var(--accent-glow); padding: 10px; border-radius: 8px; }
+    .nav-item.active {
+      color: var(--accent);
+    }
 
-.expand-arrow { font-size: 14px; color: var(--text-muted); transition: transform 0.2s; display: inline-block; }
-.expand-arrow.open { transform: rotate(180deg); }
+    .nav-icon {
+      font-size: 20px;
+      margin-bottom: 4px;
+      transition: transform 0.2s;
+    }
 
-.water-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-.water-drop {
-  width: 36px; height: 36px; border-radius: 8px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; transition: all 0.2s;
-}
-.water-drop.filled { background: var(--water); opacity: 1; }
-.water-drop.empty { background: var(--border); opacity: 0.4; }
+    .nav-item.active .nav-icon {
+      transform: translateY(-2px);
+    }
 
-.supp-btn {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 14px; border-radius: 10px; cursor: pointer;
-  border: 1px solid var(--border); background: var(--card);
-  margin-bottom: 8px; transition: all 0.2s; width: 100%;
-  font-family: 'DM Sans', sans-serif; color: var(--text);
-}
-.supp-btn.taken {
-  background: var(--purple-dim);
-  border-color: rgba(167,139,250,0.3);
-}
-.supp-check {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 2px solid var(--border); display: flex;
-  align-items: center; justify-content: center;
-  font-size: 14px; transition: all 0.2s; flex-shrink: 0;
-}
-.supp-btn.taken .supp-check {
-  background: var(--purple);
-  border-color: var(--purple);
-  color: var(--bg);
-}
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+    }
 
-.rule-num {
-  font-family: 'Space Mono', monospace;
-  font-size: 24px; font-weight: 700;
-  color: var(--accent-dim); line-height: 1;
-}
+    .content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
 
-.tip-box {
-  font-size: 11px; color: var(--accent); font-weight: 600;
-  background: var(--accent-glow); padding: 6px 10px;
-  border-radius: 6px; display: inline-block; margin-top: 8px;
-}
+    h2 {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
 
-.yellow-note {
-  font-size: 11px; color: var(--yellow); margin-top: 8px;
-  background: var(--yellow-dim); padding: 6px 8px; border-radius: 6px;
-}
+    h3 {
+      font-size: 15px;
+      font-weight: 700;
+    }
 
-.hidden { display: none; }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.animate-in { animation: fadeIn 0.3s ease; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
 
-.streak-bar {
-  display: flex; gap: 4px; margin-top: 8px;
-}
-.streak-day {
-  flex: 1; height: 6px; border-radius: 3px; transition: background 0.3s;
-}
-</style>
+    .card.highlight-now {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card.highlight-now::before {
+      content: 'NOW';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--accent);
+      color: #000;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-bottom-left-radius: 8px;
+    }
+
+    .card-accent {
+      background: var(--accent-glow);
+      border-color: var(--accent-dim);
+    }
+
+    .card-red {
+      background: var(--red-dim);
+      border-color: rgba(239, 68, 68, 0.25);
+    }
+
+    .card-purple {
+      background: var(--purple-dim);
+      border-color: rgba(167, 139, 250, 0.25);
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .badge-green {
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    .badge-yellow {
+      color: var(--yellow);
+      background: var(--yellow-dim);
+    }
+
+    .badge-muted {
+      color: var(--text-dim);
+      background: var(--border);
+    }
+
+    .badge-purple {
+      color: var(--purple);
+      background: var(--purple-dim);
+    }
+
+    .macro-row {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+      font-weight: 600;
+    }
+
+    .macro-p {
+      color: var(--protein);
+    }
+
+    .macro-c {
+      color: var(--carbs);
+    }
+
+    .macro-f {
+      color: var(--fat);
+    }
+
+    .macro-s {
+      color: var(--red);
+    }
+
+    .swap-header {
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .swap-detail {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .swap-tip {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    /* Form Elements */
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-field {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: border 0.2s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .trainer-notes {
+      width: 100%;
+      min-height: 100px;
+      background: rgba(245, 158, 11, 0.05);
+      border: 1px solid var(--yellow-dim);
+      color: var(--yellow);
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px var(--accent-glow);
+      font-family: inherit;
+      transition: opacity 0.2s;
+      margin-top: 8px;
+    }
+
+    .btn-primary:active {
+      opacity: 0.8;
+    }
+
+    .water-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .water-drop {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.2s;
+    }
+
+    .water-drop.filled {
+      background: var(--water);
+      opacity: 1;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+    }
+
+    .water-drop.empty {
+      background: var(--border);
+      opacity: 0.4;
+    }
+
+    .supp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--card);
+      margin-bottom: 10px;
+      transition: all 0.2s;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+    }
+
+    .supp-btn.taken {
+      background: var(--purple-dim);
+      border-color: rgba(167, 139, 250, 0.3);
+    }
+
+    .supp-check {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .supp-btn.taken .supp-check {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: #fff;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="header">
-  <div class="header-inner">
-    <h1><span>✂</span> BARBER'S CUT</h1>
-    <p>REAL-LIFE MEAL SYSTEM — NO COOKING AT WORK, NO BS</p>
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-title-box">
+        <h1><span>✂</span> BC SYSTEM</h1>
+        <p>LIVE MEAL & PREP GUIDE</p>
+      </div>
+      <div class="clock-widget">
+        <div class="clock-time" id="liveTime">--:--</div>
+        <div class="clock-date" id="liveDate">---</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="tabs">
-  <div class="tabs-inner" id="tabsContainer"></div>
-</div>
+  <div class="content" id="content"></div>
 
-<div class="content" id="content"></div>
+  <div class="bottom-nav">
+    <div class="bottom-nav-inner" id="navContainer"></div>
+  </div>
 
-<script>
-// === STATE ===
-const state = {
-  activeTab: 'swaps',
-  waterCount: parseInt(localStorage.getItem('bc_water') || '0'),
-  probTaken: localStorage.getItem('bc_prob') === 'true',
-  vitTaken: localStorage.getItem('bc_vit') === 'true',
-  expandedSwaps: {},
-  expandedMonday: null,
-  checkedMeals: JSON.parse(localStorage.getItem('bc_meals') || '{}'),
-  lastDate: localStorage.getItem('bc_date') || '',
-  streak: JSON.parse(localStorage.getItem('bc_streak') || '[]'),
-};
+  <script>
+    // === PROFILE LOGIC ===
+    function getProfileData() {
+      return JSON.parse(localStorage.getItem('bc_profile') || '{"age":25,"weight":180,"height":70,"target":165,"notes":"","macros":{"p":150,"c":120,"f":50}}');
+    }
+    function saveProfileData(data) {
+      localStorage.setItem('bc_profile', JSON.stringify(data));
+    }
 
-// Reset daily trackers if new day
-const today = new Date().toDateString();
-if (state.lastDate !== today) {
-  state.waterCount = 0;
-  state.probTaken = false;
-  state.vitTaken = false;
-  state.checkedMeals = {};
-  localStorage.setItem('bc_water', '0');
-  localStorage.setItem('bc_prob', 'false');
-  localStorage.setItem('bc_vit', 'false');
-  localStorage.setItem('bc_meals', '{}');
-  localStorage.setItem('bc_date', today);
+    function calculateTDEE(weightLbs, heightInches, age) {
+      // Mifflin-St Jeor Equation roughly for men
+      const weightKg = weightLbs * 0.453592;
+      const heightCm = heightInches * 2.54;
+      const bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
+      return Math.round(bmr * 1.55); // Moderate activity (barber)
+    }
 
-  // Update streak
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  if (state.lastDate === yesterday.toDateString()) {
-    // continuing streak
-  }
-}
+    // === STATE ===
+    const state = {
+      activeTab: 'today',
+      waterCount: parseInt(localStorage.getItem('bc_water') || '0'),
+      probTaken: localStorage.getItem('bc_prob') === 'true',
+      vitTaken: localStorage.getItem('bc_vit') === 'true',
+      expandedSwaps: {},
+      expandedMonday: null,
+      lastDate: localStorage.getItem('bc_date') || '',
+      profile: getProfileData()
+    };
 
-function save(key, val) {
-  localStorage.setItem(key, typeof val === 'object' ? JSON.stringify(val) : String(val));
-}
+    const todayStr = new Date().toDateString();
+    if (state.lastDate !== todayStr) {
+      state.waterCount = 0;
+      state.probTaken = false;
+      state.vitTaken = false;
+      localStorage.setItem('bc_water', '0');
+      localStorage.setItem('bc_prob', 'false');
+      localStorage.setItem('bc_vit', 'false');
+      localStorage.setItem('bc_date', todayStr);
+    }
 
-// === DATA ===
-const TABS = [
-  { id: 'swaps', label: '🔄 Swaps' },
-  { id: 'week', label: '📅 Week' },
-  { id: 'monday', label: '🏠 Monday' },
-  { id: 'supps', label: '💊 Supps' },
-  { id: 'prep', label: '🔪 Prep' },
-  { id: 'rules', label: '⚡ Rules' },
-];
+    function save(key, val) {
+      localStorage.setItem(key, typeof val === 'object' ? JSON.stringify(val) : String(val));
+    }
 
-const WORK_MEALS = {
-  morning: {
-    label: '☕ Morning (Before/Early Shift)',
-    current: { name: "Dunkin' Latte", cals: 350, protein: 8, carbs: 56, fat: 10, sugar: '48g sugar' },
-    swaps: [
-      { name: "Dunkin' Iced Coffee w/ Cream (no sugar)", cals: 50, protein: 1, carbs: 2, fat: 4, sugar: '0g sugar', tip: 'Order "iced coffee with cream, no liquid sugar, no swirl." Save ~300 cal and 48g sugar daily. This alone drops 1 lb every 12 days.', difficulty: '🟢 Easy' },
-      { name: "Dunkin' Cold Brew w/ Cream", cals: 30, protein: 1, carbs: 1, fat: 3, sugar: '0g sugar', tip: 'Even less calories. Smoother taste. Ask for cold brew with a splash of cream. Nothing else.', difficulty: '🟢 Easy' },
-      { name: "Dunkin' Wake-Up Wrap (Egg & Cheese)", cals: 180, protein: 10, carbs: 14, fat: 9, sugar: '1g sugar', tip: 'If you need food in the morning, grab this WITH your unsweetened coffee. Small, fast to eat between clients.', difficulty: '🟢 Easy' },
-    ]
-  },
-  lunch: {
-    label: '🥙 Mid-Day (1-3pm Quick Run)',
-    current: { name: 'Boom Boom Chicken Wrap', cals: 780, protein: 35, carbs: 62, fat: 42, sugar: '~8g sugar' },
-    swaps: [
-      { name: 'Deli Grilled Chicken Salad (oil & vinegar)', cals: 380, protein: 38, carbs: 12, fat: 18, sugar: '2g sugar', tip: 'Ask for grilled chicken over lettuce/spinach with oil & vinegar. Skip the creamy dressing. Most delis make this in 3 min — same speed as a wrap.', difficulty: '🟢 Easy' },
-      { name: 'Deli Chicken Cutlet over Salad', cals: 480, protein: 40, carbs: 20, fat: 26, sugar: '3g sugar', tip: "If you want something more filling, get the cutlet (fried is fine sometimes) but put it over salad instead of in bread. Cuts ~300 cal vs a hero.", difficulty: '🟡 Medium' },
-      { name: 'Chick-fil-A: Grilled Nuggets (12pc) + Side Salad', cals: 310, protein: 38, carbs: 16, fat: 10, sugar: '3g sugar', tip: "12-piece grilled nuggets (not fried) + side salad with light dressing. High protein, low sugar, and Chick-fil-A speed means you're back in the chair fast.", difficulty: '🟢 Easy' },
-      { name: 'Chick-fil-A: Grilled Sandwich (no bun)', cals: 200, protein: 29, carbs: 4, fat: 7, sugar: '1g sugar', tip: "Ask for the grilled sandwich with no bun in a bowl. Add a side salad. Total: ~310 cal. They'll do it, it's not weird.", difficulty: '🟡 Medium' },
-    ]
-  },
-  dinner: {
-    label: "🌙 Dinner (Home — Siblings' Choice)",
-    current: { name: "McDonald's / Pizza / Uber Eats", cals: 1100, protein: 35, carbs: 110, fat: 55, sugar: '~30g sugar' },
-    swaps: [
-      { name: "McDonald's: 2 McChicken (no mayo) + Water", cals: 530, protein: 28, carbs: 62, fat: 18, sugar: '6g sugar', tip: "When siblings want McD's — get 2 McChickens, ask for no mayo. Skip the fries and soda. You save ~600 calories vs a Big Mac meal.", difficulty: '🟢 Easy' },
-      { name: "McDonald's: 2 Grilled Chicken Wraps", cals: 500, protein: 38, carbs: 44, fat: 18, sugar: '4g sugar', tip: "McD's snack wraps if available — or 2 McChickens, ditch the top bun on each (open-faced). Pair with water.", difficulty: '🟡 Medium' },
-      { name: 'Pizza: 2 Slices Plain + Side Salad', cals: 580, protein: 24, carbs: 64, fat: 24, sugar: '8g sugar', tip: "When it's pizza night: ONLY 2 slices (not 3-4). Plain cheese or one topping. Ask for a side salad with oil & vinegar. Eat the salad first so you're less tempted to grab slice #3.", difficulty: '🟡 Medium' },
-      { name: 'Uber Eats: Chipotle Bowl (no rice/sour cream)', cals: 510, protein: 46, carbs: 28, fat: 22, sugar: '4g sugar', tip: "If ordering Uber Eats — Chipotle burrito bowl: double chicken, fajita veggies, lettuce, pico, guac (small). Skip rice, beans, sour cream, cheese. Filling, high protein.", difficulty: '🟡 Medium' },
-    ]
-  }
-};
+    // === DATA ===
+    const TABS = [
+      { id: 'today', label: 'Today', icon: '📍' },
+      { id: 'swaps', label: 'Swaps', icon: '🔄' },
+      { id: 'prep', label: 'Prep', icon: '🔪' },
+      { id: 'supps', label: 'Supps', icon: '💊' },
+      { id: 'profile', label: 'Profile', icon: '👤' }
+    ];
 
-const MONDAY_MEALS = [
-  { time: '8:00 AM', name: 'Oatmeal + Almonds + Coffee (no sugar)', cals: 340, protein: 14, carbs: 44, fat: 13, recipe: '½ cup oats in water, top with almonds, cinnamon. Coffee with cream, no sugar.' },
-  { time: '10:00 AM', name: '💊 Probiotic + Multivitamin', cals: 0, protein: 0, carbs: 0, fat: 0, recipe: 'Take your Spring Valley Probiotic and Equate Multivitamin with a full glass of water after breakfast. Take both at the same time so you don\'t forget.' },
-  { time: '11:00 AM', name: 'Scrambled Eggs + Spinach', cals: 280, protein: 22, carbs: 4, fat: 18, recipe: '3 eggs scrambled with spinach in olive oil. Salt, pepper, garlic powder.' },
-  { time: '2:00 PM', name: 'Grilled Chicken + Spinach Salad', cals: 400, protein: 46, carbs: 6, fat: 20, recipe: '6oz chicken over spinach with olive oil drizzle. Batch cook extra chicken for the week while you\'re at it.' },
-  { time: '5:00 PM', name: 'Greek Yogurt + Almonds', cals: 180, protein: 20, carbs: 8, fat: 7, recipe: '1 cup yogurt + handful of almonds. Quick and clean.' },
-  { time: '7:30 PM', name: 'Chicken + Soup or Eggs', cals: 380, protein: 40, carbs: 18, fat: 14, recipe: 'Leftover chicken + Lipton soup with spinach, or chicken + scrambled eggs.' },
-];
+    const WORK_MEALS = [
+      {
+        id: 'morning', timeStart: 0, timeEnd: 11, label: '☕ Morning (Before 11 AM)',
+        current: { name: "Dunkin' Latte", cals: 350, protein: 8, carbs: 56, fat: 10, sugar: '48g' },
+        swaps: [
+          { name: "Dunkin' Iced Coffee w/ Cream", cals: 50, protein: 1, carbs: 2, fat: 4, sugar: '0g', tip: 'No swirl, no liquid sugar. Save 300 cals.', difficulty: '🟢 Easy' },
+          { name: "Dunkin' Wake-Up Wrap", cals: 180, protein: 10, carbs: 14, fat: 9, sugar: '1g', tip: 'Eat with unsweetened coffee. Fast & solid.', difficulty: '🟢 Easy' }
+        ]
+      },
+      {
+        id: 'lunch', timeStart: 11, timeEnd: 16, label: '🥙 Mid-Day (11 AM - 4 PM)',
+        current: { name: 'Fried Wrap / Hero', cals: 780, protein: 35, carbs: 62, fat: 42, sugar: '8g' },
+        swaps: [
+          { name: 'Deli Grilled Chicken Salad', cals: 380, protein: 38, carbs: 12, fat: 18, sugar: '2g', tip: 'Oil & vinegar. Same speed as a wrap.', difficulty: '🟢 Easy' },
+          { name: 'Chick-fil-A Grilled Nuggets (12)', cals: 310, protein: 38, carbs: 16, fat: 10, sugar: '3g', tip: 'Plus side salad = top tier fast food cut.', difficulty: '🟢 Easy' }
+        ]
+      },
+      {
+        id: 'dinner', timeStart: 16, timeEnd: 24, label: '🌙 Dinner (After 4 PM)',
+        current: { name: 'McD/Pizza/UberEats', cals: 1100, protein: 35, carbs: 110, fat: 55, sugar: '30g' },
+        swaps: [
+          { name: '2 McChickens (No Mayo)', cals: 530, protein: 28, carbs: 62, fat: 18, sugar: '6g', tip: 'Skip fries/soda. Save ~600 cals vs Big Mac meal.', difficulty: '🟢 Easy' },
+          { name: 'Pizza: 2 Slices + Side Salad', cals: 580, protein: 24, carbs: 64, fat: 24, sugar: '8g', tip: 'Eat salad BEFORE pizza. Stop at 2 slices.', difficulty: '🟡 Medium' }
+        ]
+      }
+    ];
 
-const WEEKLY_VIEW = [
-  { day: 'MON (Off)', morning: 'Oatmeal + Almonds + 💊 Supps', midday: 'Eggs + Spinach / Chicken Salad', dinner: 'Home cooked chicken meal', notes: 'Prep day. Cook everything. Take supps with breakfast.', cals: '~1,580' },
-  { day: 'TUE', morning: 'Dunkin\' Cold Brew + 💊 Supps w/ eggs at shop', midday: 'Deli grilled chicken salad', dinner: '2 McChicken no mayo (if sibs want McD\'s)', notes: 'Take supps with your prepped eggs mid-morning.', cals: '~1,400' },
-  { day: 'WED', morning: 'Overnight oats (prepped Mon) + 💊 Supps', midday: 'Chick-fil-A grilled nuggets + salad', dinner: 'Uber Eats Chipotle bowl (no rice)', notes: 'Supps with oats. Eat eggs before ordering dinner.', cals: '~1,450' },
-  { day: 'THU', morning: 'Dunkin\' Cold Brew + Wake-Up Wrap + 💊', midday: 'Deli chicken cutlet over salad', dinner: '2 slices pizza + side salad', notes: 'Take supps with the Wake-Up Wrap. Salad first, then pizza.', cals: '~1,500' },
-  { day: 'FRI', morning: 'Dunkin\' Cold Brew + 💊 w/ eggs', midday: 'Chick-fil-A grilled sandwich (no bun)', dinner: 'Grilled chicken from Uber Eats', notes: 'Supps + eggs mid-morning. Almonds between clients.', cals: '~1,350' },
-  { day: 'SAT', morning: 'Overnight oats or Cold Brew + Wrap + 💊', midday: 'Deli grilled chicken salad', dinner: 'Use the swap guide for whatever sibs want', notes: 'Busy day. Lean on prepped food. Don\'t skip supps.', cals: '~1,400-1,600' },
-  { day: 'SUN', morning: 'Eggs + Oatmeal at home + 💊', midday: 'Deli / Chick-fil-A swap', dinner: 'Home or Uber Eats — grilled option', notes: 'If off: cook. If working: same as weekday.', cals: '~1,400-1,600' },
-];
+    const MONDAY_MEALS = [
+      { time: 8, label: '8:00 AM', name: 'Oatmeal + Almonds + Coffee', cals: 340, p: 14, c: 44, f: 13, info: 'Oats, almonds, cinnamon.' },
+      { time: 10, label: '10:00 AM', name: '💊 Probiotic + Multivitamin', cals: 0, p: 0, c: 0, f: 0, info: 'Take with full glass of water.' },
+      { time: 11, label: '11:00 AM', name: 'Scrambled Eggs + Spinach', cals: 280, p: 22, c: 4, f: 18, info: '3 eggs in olive oil.' },
+      { time: 14, label: '2:00 PM', name: 'Grilled Chicken + Spinach Salad', cals: 400, p: 46, c: 6, f: 20, info: '6oz chicken. Bulk cook now!' },
+      { time: 17, label: '5:00 PM', name: 'Greek Yogurt + Almonds', cals: 180, p: 20, c: 8, f: 7, info: 'Quick and clean.' },
+      { time: 19, label: '7:30 PM', name: 'Chicken + Eggs', cals: 380, p: 40, c: 18, f: 14, info: 'Leftovers.' },
+    ];
 
-const PREP_TASKS = [
-  { task: 'Bake ALL the chicken (3 lbs) — slice, store in 5 containers', time: '25 min', why: 'Grab-and-go chicken for work days. Eat cold, reheat at home, or toss on a deli salad.' },
-  { task: 'Hard boil 10 eggs — peel, container, fridge', time: '15 min', why: '2 eggs = quick protein when you get home. Eat before siblings order food so you\'re not starving.' },
-  { task: 'Portion almonds into small bags (7 bags, ~23 each)', time: '5 min', why: 'Toss a bag in your barber bag. Snack between clients instead of nothing.' },
-  { task: 'Prep overnight oats for Tue/Wed (oats + yogurt + water → fridge)', time: '3 min', why: 'Grab and eat on the way to the shop. Skip the Dunkin\' line.' },
-  { task: 'Wash & bag spinach with paper towel', time: '5 min', why: 'Ready-to-eat greens all week.' },
-  { task: 'Set daily phone alarm: "💊 Take supps" at 9 AM', time: '1 min', why: 'The probiotic rebuilds your gut after the reset. The multivitamin covers gaps while you transition. Both need to become automatic.' },
-];
+    // === LIVE CLOCK ===
+    function startClock() {
+      const updateTime = () => {
+        const now = new Date();
+        const liveTime = document.getElementById('liveTime');
+        const liveDate = document.getElementById('liveDate');
+        if (liveTime) liveTime.innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        if (liveDate) liveDate.innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      };
+      updateTime();
+      setInterval(updateTime, 10000);
+    }
 
-const SUPPS_DATA = [
-  {
-    name: 'Spring Valley Daily Probiotic',
-    icon: '🦠',
-    when: 'Every morning with food',
-    why: 'After your gut reset, your good bacteria got wiped out along with the bad. This puts the good ones back. Take it every single day for at least 30 days straight — no skipping. After 30 days, your digestion, bloating, and even cravings will noticeably improve.',
-    howTo: 'Take 1 capsule with breakfast or your first meal. Needs food in your stomach to work best. On work days, take it with your prepped eggs or overnight oats — not with just coffee.',
-    warning: 'Don\'t take on a completely empty stomach. Mild bloating the first few days is normal — your gut is adjusting. If it lasts more than a week, take it at night instead.',
-    duration: '30 days minimum, then ongoing',
-    stateKey: 'probTaken',
-    saveKey: 'bc_prob',
-  },
-  {
-    name: 'Equate Men\'s One Daily Multivitamin',
-    icon: '💊',
-    when: 'With your biggest meal (lunch or dinner)',
-    why: 'You\'re switching from fast food that\'s high calorie but nutrient-empty to real food. During this transition, your body might be short on vitamins and minerals it\'s used to getting from fortified junk food. The multi fills those gaps so you don\'t feel run down.',
-    howTo: 'Take 1 tablet with your largest meal of the day. Fat-soluble vitamins (A, D, E, K) absorb better with food that has some fat in it. On Mondays, take with your chicken + spinach lunch. On work days, take with dinner.',
-    warning: 'Can cause nausea if taken without food. If you feel queasy, switch to taking it at dinner. Don\'t double up if you miss a day — just take one the next day.',
-    duration: 'Ongoing — every day',
-    stateKey: 'vitTaken',
-    saveKey: 'bc_vit',
-  }
-];
+    // === RENDER ENGINE ===
+    function renderTabs() {
+      const container = document.getElementById('navContainer');
+      if (!container) return;
+      container.innerHTML = TABS.map(t =>
+        `<button class="nav-item ${state.activeTab === t.id ? 'active' : ''}" data-tab="${t.id}">
+      <div class="nav-icon">${t.icon}</div>
+      <div class="nav-label">${t.label}</div>
+    </button>`
+      ).join('');
+      container.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.activeTab = btn.dataset.tab;
+          renderTabs();
+          renderContent();
+          window.scrollTo(0, 0);
+        });
+      });
+    }
 
-// === RENDER ENGINE ===
-function renderTabs() {
-  const container = document.getElementById('tabsContainer');
-  container.innerHTML = TABS.map(t =>
-    `<button class="tab ${state.activeTab === t.id ? 'active' : ''}" data-tab="${t.id}">${t.label}</button>`
-  ).join('');
-  container.querySelectorAll('.tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.activeTab = btn.dataset.tab;
-      renderTabs();
-      renderContent();
-    });
-  });
-}
+    function renderContent() {
+      const el = document.getElementById('content');
+      if (!el) return;
+      el.className = 'content animate-in';
+      switch (state.activeTab) {
+        case 'today': el.innerHTML = renderToday(); break;
+        case 'swaps': el.innerHTML = renderSwaps(); break;
+        case 'prep': el.innerHTML = renderPrep(); break;
+        case 'supps': el.innerHTML = renderSupps(); break;
+        case 'profile': el.innerHTML = renderProfile(); break;
+      }
+      attachEvents();
+    }
 
-function renderContent() {
-  const el = document.getElementById('content');
-  el.className = 'content animate-in';
-  switch(state.activeTab) {
-    case 'swaps': el.innerHTML = renderSwaps(); break;
-    case 'week': el.innerHTML = renderWeek(); break;
-    case 'monday': el.innerHTML = renderMonday(); break;
-    case 'supps': el.innerHTML = renderSupps(); break;
-    case 'prep': el.innerHTML = renderPrep(); break;
-    case 'rules': el.innerHTML = renderRules(); break;
-  }
-  attachEvents();
-}
+    function renderToday() {
+      const now = new Date();
+      const day = now.getDay(); // 0 Sun, 1 Mon, 2 Tue...
+      const hour = now.getHours();
 
-function renderSwaps() {
-  let html = `<h2>Work Day Food Swaps</h2><p class="subtitle">Same places you already eat. Just smarter orders. No extra time.</p>`;
-  
-  for (const [cat, data] of Object.entries(WORK_MEALS)) {
-    html += `<h3 style="color:var(--text-dim);margin:16px 0 10px">${data.label}</h3>`;
-    
-    // Current order
-    html += `
-      <div class="card card-red">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div style="font-size:10px;color:var(--red);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px">❌ Your Current Order</div>
-            <div style="font-size:14px;font-weight:600">${data.current.name}</div>
+      let html = `<h2>Today's Live Plan</h2>
+    <p class="subtitle">Your active requirements based on the current time.</p>`;
+
+      // Monday is Off/Prep day
+      if (day === 1) {
+        html += `<div class="card card-accent"><h3 style="color:var(--accent)">🏠 MONDAY PREP DAY</h3><p style="font-size:12px;color:var(--text-dim);margin-top:4px">Cook everything today to survive the week.</p></div>`;
+
+        MONDAY_MEALS.forEach((meal, i) => {
+          const isNow = (hour >= meal.time && hour < meal.time + 2) || (i === 0 && hour < 8) || (i === MONDAY_MEALS.length - 1 && hour >= 21);
+          html += `
+        <div class="card ${isNow ? 'highlight-now' : ''} ${meal.name.includes('💊') ? 'card-purple' : ''}" style="cursor:pointer" data-monday="${i}">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div style="font-size:11px;color:var(--text-muted);font-weight:700">${meal.label}</div>
+              <div style="font-size:15px;font-weight:600;margin-top:4px">${meal.name}</div>
+            </div>
+            ${meal.cals ? `<div style="font-size:16px;font-weight:700;color:var(--accent)">${meal.cals} <span style="font-size:10px;color:var(--text-muted)">cal</span></div>` : ''}
           </div>
-          <div style="text-align:right">
-            <div style="font-size:16px;font-weight:700;color:var(--red)">${data.current.cals}</div>
-            <div style="font-size:10px;color:var(--text-muted)">cal</div>
+          ${meal.cals ? `<div class="macro-row"><span class="macro-p">P: ${meal.p}g</span><span class="macro-c">C: ${meal.c}g</span><span class="macro-f">F: ${meal.f}g</span></div>` : ''}
+          <div class="${state.expandedMonday === i || isNow ? '' : 'hidden'}" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text-dim);line-height:1.5">
+            ${meal.info}
           </div>
-        </div>
-        <div class="macro-row">
-          <span class="macro-p">P: ${data.current.protein}g</span>
-          <span class="macro-c">C: ${data.current.carbs}g</span>
-          <span class="macro-f">F: ${data.current.fat}g</span>
-          <span class="macro-s">🍬 ${data.current.sugar}</span>
-        </div>
-      </div>`;
-    
-    // Swaps
-    data.swaps.forEach((sw, i) => {
-      const key = `${cat}-${i}`;
-      const isOpen = state.expandedSwaps[key];
-      const saved = data.current.cals - sw.cals;
+        </div>`;
+        });
+      } else {
+        html += `<div class="card card-yellow"><h3 style="color:var(--text)">✂ WORK DAY</h3><p style="font-size:12px;color:var(--text-dim);margin-top:4px">Stick to the prepped snacks and smart fast-food swaps.</p></div>`;
+
+        // Workday view based on WORK_MEALS
+        WORK_MEALS.forEach((meal, i) => {
+          const isNow = (hour >= meal.timeStart && hour < meal.timeEnd);
+          const isPast = hour >= meal.timeEnd;
+          html += `
+        <div class="card ${isNow ? 'highlight-now' : (isPast ? 'opacity-50' : '')}">
+          <div style="font-size:11px;color:var(--text-muted);font-weight:700;margin-bottom:8px">${meal.label}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card-hover);padding:10px;border-radius:8px">
+            <div style="font-size:14px;font-weight:600">SWAP 1: ${meal.swaps[0].name}</div>
+            <div style="font-size:14px;font-weight:700;color:var(--accent)">${meal.swaps[0].cals}</div>
+          </div>
+          ${meal.swaps[1] ? `
+          <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;background:var(--card-hover);padding:10px;border-radius:8px">
+            <div style="font-size:14px;font-weight:600">SWAP 2: ${meal.swaps[1].name}</div>
+            <div style="font-size:14px;font-weight:700;color:var(--accent)">${meal.swaps[1].cals}</div>
+          </div>` : ''}
+          ${isNow ? `<div style="margin-top:10px;font-size:12px;color:var(--text-dim);background:var(--accent-glow);color:var(--accent);padding:10px;border-radius:8px;font-weight:600">💡 TIP: ${meal.swaps[0].tip}</div>` : ''}
+        </div>`;
+        });
+      }
+
+      // Common trackers on Today view
       html += `
-        <div class="card" style="padding:0;overflow:hidden;cursor:pointer" data-swap="${key}">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3>💧 Water Tracker</h3>
+        <span style="color:var(--water);font-weight:700;font-size:14px">${state.waterCount} / 10 drops</span>
+      </div>
+      <div class="water-grid">
+        ${Array.from({ length: 10 }).map((_, i) => `<div class="water-drop ${i < state.waterCount ? 'filled' : 'empty'}" data-water="${i}">💧</div>`).join('')}
+      </div>
+    </div>
+    
+    <div class="card card-purple">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3>💊 Daily Supplements</h3>
+        <span style="font-size:12px;color:var(--purple);font-weight:600">${(state.probTaken && state.vitTaken) ? '✅ Done' : 'Pending'}</span>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="supp-btn ${state.probTaken ? 'taken' : ''}" data-supp="probTaken" style="flex:1;margin:0;padding:12px">
+          <span style="font-size:14px;font-weight:600">Probiotic</span>
+        </button>
+        <button class="supp-btn ${state.vitTaken ? 'taken' : ''}" data-supp="vitTaken" style="flex:1;margin:0;padding:12px">
+          <span style="font-size:14px;font-weight:600">Vitamin</span>
+        </button>
+      </div>
+    </div>
+  `;
+      return html;
+    }
+
+    function renderProfile() {
+      const p = state.profile;
+      const tdee = calculateTDEE(p.weight, p.height, p.age);
+      const cutTarget = tdee - 500; // 500 cal deficit
+
+      let html = `
+    <h2>👤 Patient Profile</h2>
+    <p class="subtitle">Core metrics, targets, and Trainer/Dietitian notes.</p>
+    
+    <div class="card">
+      <h3 style="margin-bottom:12px;color:var(--accent)">Physiological Data</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="input-group">
+          <label>Age</label>
+          <input type="number" class="input-field stat-input" data-key="age" value="${p.age}">
+        </div>
+        <div class="input-group">
+          <label>Height (in)</label>
+          <input type="number" class="input-field stat-input" data-key="height" value="${p.height}">
+        </div>
+        <div class="input-group">
+          <label>Current Weight (lbs)</label>
+          <input type="number" class="input-field stat-input" data-key="weight" value="${p.weight}">
+        </div>
+        <div class="input-group">
+          <label>Goal Weight (lbs)</label>
+          <input type="number" class="input-field stat-input" data-key="target" value="${p.target}">
+        </div>
+      </div>
+    </div>
+    
+    <div class="card card-accent">
+      <h3 style="margin-bottom:16px;color:var(--text)">📊 Energy Profile (Calculated)</h3>
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px">
+        <span style="color:var(--text-muted);font-weight:600">Maint. Calories (TDEE)</span>
+        <span style="font-weight:700;font-size:16px">${tdee} kcal</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+        <span style="color:var(--text-dim);font-weight:600">Deficit Target (-500)</span>
+        <span style="color:var(--accent);font-weight:700;font-size:18px">${cutTarget} kcal</span>
+      </div>
+      
+      <h3 style="margin-bottom:10px;font-size:12px;text-transform:uppercase;color:var(--text-muted)">Daily Macro Directives</h3>
+      <div class="macro-row" style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;justify-content:space-around">
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase">Protein</div>
+          <div style="color:var(--protein);font-size:18px">${p.macros.p}g</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase">Carbs</div>
+          <div style="color:var(--carbs);font-size:18px">${p.macros.c}g</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase">Fat</div>
+          <div style="color:var(--fat);font-size:18px">${p.macros.f}g</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card" style="border-color:var(--yellow-dim);background:rgba(245,158,11,0.02)">
+      <h3 style="margin-bottom:12px;color:var(--yellow)">📋 Trainer / Dietitian Notes</h3>
+      <textarea class="trainer-notes stat-input" data-key="notes" placeholder="Add specific instructions, protocol adjustments, or medical notes here...">${p.notes}</textarea>
+    </div>
+    
+    <button class="btn-primary" id="saveProfileBtn">Save Profile Changes</button>
+  `;
+      return html;
+    }
+
+    function renderSwaps() {
+      let html = `<h2>Master Swaps Guide</h2><p class="subtitle">Detailed fast-food and restaurant alternatives.</p>`;
+      WORK_MEALS.forEach(cat => {
+        html += `<h3 style="color:var(--text-dim);margin:20px 0 10px;text-transform:uppercase;font-size:12px;letter-spacing:0.5px">${cat.label}</h3>`;
+
+        cat.swaps.forEach((sw, i) => {
+          const key = cat.id + '-' + i;
+          const isOpen = state.expandedSwaps[key];
+          html += `
+        <div class="card" style="padding:16px;cursor:pointer" data-swap="${key}">
           <div class="swap-header">
             <div style="flex:1">
-              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:4px">
-                <span class="badge badge-green">-${saved} cal</span>
-                <span class="badge ${sw.difficulty.includes('🟢') ? 'badge-green' : 'badge-yellow'}">${sw.difficulty}</span>
-                <span class="badge badge-muted">${sw.sugar}</span>
+              <div style="font-size:16px;font-weight:700;color:var(--text)">${sw.name}</div>
+              <div style="display:flex;gap:6px;margin-top:8px">
+                <span class="badge badge-green">${sw.cals} cal</span>
+                <span class="badge badge-muted">${sw.sugar} sug</span>
               </div>
-              <div style="font-size:14px;font-weight:600">${sw.name}</div>
             </div>
-            <div style="text-align:right;margin-left:12px">
-              <div style="font-size:16px;font-weight:700;color:var(--accent)">${sw.cals}</div>
-              <div style="font-size:10px;color:var(--text-muted)">cal</div>
-            </div>
+            <div style="color:var(--text-muted);font-size:24px">${isOpen ? '−' : '+'}</div>
           </div>
           <div class="swap-detail ${isOpen ? '' : 'hidden'}">
-            <div class="macro-row" style="margin-bottom:8px">
+            <div class="macro-row" style="margin-bottom:12px">
               <span class="macro-p">P: ${sw.protein}g</span>
               <span class="macro-c">C: ${sw.carbs}g</span>
               <span class="macro-f">F: ${sw.fat}g</span>
@@ -436,293 +823,109 @@ function renderSwaps() {
             <div class="swap-tip">💡 ${sw.tip}</div>
           </div>
         </div>`;
-    });
-  }
-  return html;
-}
+        });
+      });
+      return html;
+    }
 
-function renderWeek() {
-  let html = `<h2>Your Real Week</h2><p class="subtitle">Monday = cook & prep. Tue-Sun = fast food swaps + prepped snacks + 💊 supps daily.</p>`;
-  
-  WEEKLY_VIEW.forEach((day, i) => {
-    html += `
-      <div class="card ${i === 0 ? 'card-accent' : ''}">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <h3 style="color:${i === 0 ? 'var(--accent)' : 'var(--text)'}">${day.day}</h3>
-          <span style="font-size:12px;font-weight:600;color:var(--accent)">${day.cals} cal</span>
-        </div>
-        <div style="font-size:12px;color:var(--text-dim);line-height:1.7">
-          <div><strong style="color:var(--text)">AM:</strong> ${day.morning}</div>
-          <div><strong style="color:var(--text)">Mid:</strong> ${day.midday}</div>
-          <div><strong style="color:var(--text)">PM:</strong> ${day.dinner}</div>
-        </div>
-        <div class="yellow-note">📌 ${day.notes}</div>
-      </div>`;
-  });
-
-  // Water tracker
-  html += `
-    <div class="card" style="margin-top:12px">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <h3>💧 Daily Water</h3>
-        <span style="color:var(--water);font-weight:700;font-size:13px">${state.waterCount} / 10</span>
-      </div>
-      <div class="water-grid">
-        ${Array.from({length:10}).map((_,i) => `<div class="water-drop ${i < state.waterCount ? 'filled' : 'empty'}" data-water="${i}">💧</div>`).join('')}
-      </div>
-      <div style="font-size:11px;color:var(--text-muted)">Keep a water bottle at your station. Sip between every client.</div>
-    </div>`;
-
-  // Quick supps status
-  html += `
-    <div class="card card-purple" style="margin-top:4px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <h3>💊 Today's Supplements</h3>
-        <span style="font-size:12px;color:var(--purple);font-weight:600">${(state.probTaken && state.vitTaken) ? '✅ All taken' : (state.probTaken || state.vitTaken) ? '1 of 2' : 'Not yet'}</span>
-      </div>
-      <div style="font-size:12px;color:var(--text-dim);margin-top:6px">
-        ${state.probTaken ? '✅' : '⬜'} Probiotic &nbsp;&nbsp; ${state.vitTaken ? '✅' : '⬜'} Multivitamin
-        &nbsp;&nbsp;<span style="color:var(--purple);cursor:pointer;text-decoration:underline" data-goto="supps">Manage →</span>
-      </div>
-    </div>`;
-
-  return html;
-}
-
-function renderMonday() {
-  const total = MONDAY_MEALS.reduce((a, m) => ({ cals: a.cals + m.cals, protein: a.protein + m.protein, carbs: a.carbs + m.carbs, fat: a.fat + m.fat }), { cals: 0, protein: 0, carbs: 0, fat: 0 });
-  
-  let html = `
-    <h2>Monday Off Day Plan</h2>
-    <p class="subtitle">Your one day to cook, prep, eat clean, and set up the whole week.</p>
-    <div class="card card-accent" style="margin-bottom:16px">
-      <div style="display:flex;justify-content:space-around;text-align:center">
-        <div><div style="font-size:20px;font-weight:700;color:var(--accent)">${total.cals}</div><div style="font-size:10px;color:var(--text-muted)">calories</div></div>
-        <div><div style="font-size:20px;font-weight:700;color:var(--protein)">${total.protein}g</div><div style="font-size:10px;color:var(--text-muted)">protein</div></div>
-        <div><div style="font-size:20px;font-weight:700;color:var(--carbs)">${total.carbs}g</div><div style="font-size:10px;color:var(--text-muted)">carbs</div></div>
-        <div><div style="font-size:20px;font-weight:700;color:var(--fat)">${total.fat}g</div><div style="font-size:10px;color:var(--text-muted)">fat</div></div>
-      </div>
-    </div>`;
-  
-  MONDAY_MEALS.forEach((meal, i) => {
-    const isSupp = meal.name.includes('💊');
-    html += `
-      <div class="card ${isSupp ? 'card-purple' : ''}" style="cursor:pointer" data-monday="${i}">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div style="font-size:11px;color:${isSupp ? 'var(--purple)' : 'var(--accent)'};font-weight:600">${meal.time}</div>
-            <div style="font-size:14px;font-weight:600;margin-top:2px">${meal.name}</div>
-          </div>
-          ${meal.cals > 0 ? `<div style="font-size:16px;font-weight:700;color:var(--accent)">${meal.cals} <span style="font-size:10px;color:var(--text-muted)">cal</span></div>` : ''}
-        </div>
-        ${meal.cals > 0 ? `<div class="macro-row"><span class="macro-p">P: ${meal.protein}g</span><span class="macro-c">C: ${meal.carbs}g</span><span class="macro-f">F: ${meal.fat}g</span></div>` : ''}
-        <div class="${state.expandedMonday === i ? '' : 'hidden'}" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim);line-height:1.6">
-          ${meal.recipe}
-        </div>
-      </div>`;
-  });
-  return html;
-}
-
-function renderSupps() {
-  let html = `
-    <h2>💊 Supplement Tracker</h2>
-    <p class="subtitle">Take both every day. The probiotic is critical after your gut reset.</p>`;
-  
-  // Daily check-in buttons
-  html += `<div style="margin-bottom:20px">`;
-  SUPPS_DATA.forEach(supp => {
-    const taken = state[supp.stateKey];
-    html += `
-      <button class="supp-btn ${taken ? 'taken' : ''}" data-supp="${supp.stateKey}">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div class="supp-check">${taken ? '✓' : ''}</div>
-          <div style="text-align:left">
-            <div style="font-size:14px;font-weight:600">${supp.icon} ${supp.name}</div>
-            <div style="font-size:11px;color:var(--text-muted)">${supp.when}</div>
-          </div>
-        </div>
-        <span class="badge ${taken ? 'badge-purple' : 'badge-muted'}">${taken ? 'Taken ✓' : 'Not yet'}</span>
-      </button>`;
-  });
-  html += `</div>`;
-
-  // Detailed cards
-  SUPPS_DATA.forEach(supp => {
-    html += `
-      <div class="card" style="margin-bottom:12px">
-        <h3 style="margin-bottom:10px">${supp.icon} ${supp.name}</h3>
-        
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Why You Need This</div>
-          <div style="font-size:12px;color:var(--text-dim);line-height:1.6">${supp.why}</div>
-        </div>
-        
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;color:var(--protein);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">How To Take It</div>
-          <div style="font-size:12px;color:var(--text-dim);line-height:1.6">${supp.howTo}</div>
-        </div>
-        
-        <div style="margin-bottom:12px">
-          <div style="font-size:11px;color:var(--yellow);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">⚠️ Watch Out</div>
-          <div style="font-size:12px;color:var(--text-dim);line-height:1.6">${supp.warning}</div>
-        </div>
-        
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span class="badge badge-purple">📅 ${supp.duration}</span>
-          <span class="badge badge-green">⏰ ${supp.when}</span>
-        </div>
-      </div>`;
-  });
-
-  // Work day supplement strategy
-  html += `
-    <div class="card" style="background:var(--accent-glow);border-color:var(--accent-dim);margin-top:8px">
-      <h3 style="color:var(--accent);margin-bottom:8px">📋 Work Day Supplement Strategy</h3>
-      <div style="font-size:12px;color:var(--text-dim);line-height:1.8">
-        <strong style="color:var(--text)">The problem:</strong> You don't eat real food until 1-3pm at work. Supps need food.<br><br>
-        <strong style="color:var(--text)">The fix:</strong> Keep both bottles in your barber bag. When you eat your prepped hard boiled eggs mid-morning (10-11am), take both pills right then. Eggs have enough fat and protein for proper absorption.<br><br>
-        <strong style="color:var(--text)">If you forget:</strong> Take them with your deli lunch. Worst case, take them with dinner. Taking them late is better than not taking them at all.<br><br>
-        <strong style="color:var(--text)">Set a phone alarm:</strong> "💊 Supps" at 10 AM every day. After 2-3 weeks it becomes automatic.
-      </div>
-    </div>`;
-
-  return html;
-}
-
-function renderPrep() {
-  let html = `
-    <h2>Monday Prep Session</h2>
-    <p class="subtitle" style="margin-bottom:4px">~54 minutes total. Do this every Monday and your whole week is handled.</p>
-    <p style="font-size:12px;color:var(--yellow);margin-bottom:16px">Everything you prepped goes TO WORK with you. Pack it the night before.</p>`;
-  
-  PREP_TASKS.forEach(item => {
-    html += `
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <div style="font-size:14px;font-weight:600;flex:1">${item.task}</div>
-          <span class="badge badge-green" style="flex-shrink:0;margin-left:8px">${item.time}</span>
-        </div>
-        <div style="font-size:12px;color:var(--text-dim);line-height:1.5">💡 ${item.why}</div>
-      </div>`;
-  });
-
-  html += `
-    <div class="card" style="margin-top:12px">
-      <h3 style="color:var(--accent);margin-bottom:10px">🎒 Daily Work Bag</h3>
-      <div style="font-size:13px;color:var(--text-dim);line-height:1.8">
-        Pack every night before work:<br>
-        → 1 bag of almonds (between-clients snack)<br>
-        → 2 hard boiled eggs (eat before ordering dinner)<br>
-        → Water bottle (refill at shop)<br>
-        → Overnight oats if prepped (skip Dunkin' food line)<br>
-        → <strong style="color:var(--purple)">💊 Probiotic + Multivitamin bottles</strong>
-      </div>
+    function renderSupps() {
+      return `<h2>Supplement Log</h2><p class="subtitle">Consistency is everything.</p>
+    <div class="card card-purple" style="margin-top:20px">
+      <h3 style="margin-bottom:10px;color:var(--purple)">Spring Valley Probiotic</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Take 1 capsule every morning with food. Crucial for restoring gut health and digestion after your reset phase.</p>
     </div>
-    <div class="card" style="background:var(--yellow-dim);border-color:rgba(245,158,11,0.3);margin-top:4px">
-      <h3 style="color:var(--yellow);margin-bottom:6px">⚠️ The Sibling Dinner Hack</h3>
-      <div style="font-size:12px;color:var(--text-dim);line-height:1.6">
-        When you get home, eat your 2 hard boiled eggs FIRST before anyone orders food. When you're not starving, you'll order smarter. You'll get 2 slices instead of 4, or a grilled option instead of fried. This one trick changes everything.
-      </div>
+    <div class="card card-purple">
+      <h3 style="margin-bottom:10px;color:var(--purple)">Equate Multivitamin</h3>
+      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Take 1 tablet with your largest meal to prevent micronutrient deficiencies while in a caloric deficit.</p>
     </div>`;
-  return html;
-}
+    }
 
-function renderRules() {
-  const rules = [
-    { num: '01', title: 'Kill the Latte Sugar', body: "Your Dunkin' latte has 48g of sugar — that's 12 teaspoons before you even start cutting hair. Switch to cold brew or iced coffee with just cream. No liquid sugar, no swirl, no mocha. This single change eliminates ~336g of sugar per week. That's almost a full pound of pure sugar you won't be drinking.", impact: 'Saves ~2,100 cal/week = 1 lb lost every 12 days from this alone' },
-    { num: '02', title: 'Eat Eggs Before Dinner Orders', body: "The reason you overeat at dinner is because you're starving by the time you get home. Your sibs want McDonald's? Fine. But eat 2 hard boiled eggs the second you walk in the door. By the time the food arrives, you need less.", impact: 'Saves ~400-600 cal every dinner' },
-    { num: '03', title: 'Grilled, Not Fried. Salad, Not Bread.', body: "You don't have to stop going to the deli, Chick-fil-A, or McDonald's. Just change WHAT you order. At the deli: grilled chicken salad instead of a wrap. At Chick-fil-A: grilled nuggets instead of fried sandwich. Same restaurants, 40-50% fewer calories.", impact: 'Saves ~300-500 cal per meal' },
-    { num: '04', title: 'Water at Your Station', body: "Keep a water bottle at your barber station. Sip between every client. Dehydration makes you feel hungry when you're actually thirsty. Staying hydrated keeps your energy up so you don't crash at 3pm.", impact: 'Reduces false hunger, better energy, clearer skin' },
-    { num: '05', title: 'Monday is Sacred', body: "Monday off = meal prep day. Every Monday: bake chicken, boil eggs, bag almonds, make overnight oats. That 54 minutes of work sets up your entire week. Without it, you'll default to fast food for every meal.", impact: 'Difference between losing weight and staying the same' },
-    { num: '06', title: '💊 Supps Every Single Day', body: "The probiotic rebuilds your gut bacteria after the reset — without it, the reset was pointless. The multivitamin covers nutritional gaps while your diet transitions. Keep both bottles in your barber bag. Take them with your mid-morning eggs. Set a 10 AM phone alarm. No exceptions for 30 days.", impact: 'Gut health recovery, better digestion, fewer cravings, more energy' },
-  ];
-
-  let html = `<h2>6 Rules That Actually Work</h2><div style="height:16px"></div>`;
-  
-  rules.forEach(rule => {
-    html += `
-      <div class="card" style="padding:16px;margin-bottom:10px">
-        <div style="display:flex;gap:12px;align-items:flex-start">
-          <div class="rule-num">${rule.num}</div>
-          <div style="flex:1">
-            <h3 style="margin-bottom:8px;font-size:15px">${rule.title}</h3>
-            <p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin-bottom:8px">${rule.body}</p>
-            <div class="tip-box">📈 ${rule.impact}</div>
-          </div>
-        </div>
-      </div>`;
-  });
-
-  html += `
-    <div class="card" style="margin-top:16px;text-align:center;padding:20px">
-      <div style="font-size:13px;color:var(--text-dim);line-height:1.6">
-        Your current daily intake is roughly <strong style="color:var(--red)">2,230+ cal</strong> with <strong style="color:var(--red)">86g+ sugar</strong>.<br>
-        Following these swaps drops you to <strong style="color:var(--accent)">~1,400-1,600 cal</strong> with <strong style="color:var(--accent)">under 15g sugar</strong>.<br><br>
-        <span style="font-size:17px;font-weight:700;color:var(--accent)">That's 30-40 lbs in 6 months.</span><br>
-        <span style="font-size:11px;color:var(--text-muted)">Without giving up a single restaurant you already go to.</span>
-      </div>
+    function renderPrep() {
+      return `<h2>Weekly Prep Instructions</h2><p class="subtitle">Execute this every Monday to set up the entire work week.</p>
+    <div class="card">
+      <h3 style="margin-bottom:12px">Tasks</h3>
+      <ul style="list-style:none">
+        <li style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+          <div style="font-weight:600;font-size:15px;margin-bottom:4px">🍗 Bake 3 lbs Chicken</div>
+          <div style="font-size:13px;color:var(--text-dim)">Slice and pack into 5 containers. Takes ~25 min.</div>
+        </li>
+        <li style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+          <div style="font-weight:600;font-size:15px;margin-bottom:4px">🥚 Boil 10 Eggs</div>
+          <div style="font-size:13px;color:var(--text-dim)">Peel and pack. Eat 2 immediately when you arrive home to prevent over-ordering delivery. Takes ~15 min.</div>
+        </li>
+        <li>
+          <div style="font-weight:600;font-size:15px;margin-bottom:4px">🥜 Portion Almonds</div>
+          <div style="font-size:13px;color:var(--text-dim)">Make 7 small grab bags. Snack between clients.</div>
+        </li>
+      </ul>
     </div>`;
+    }
 
-  return html;
-}
+    // === EVENT HANDLERS ===
+    function attachEvents() {
+      document.querySelectorAll('[data-swap]').forEach(el => {
+        el.addEventListener('click', () => {
+          const key = el.dataset.swap;
+          state.expandedSwaps[key] = !state.expandedSwaps[key];
+          renderContent();
+        });
+      });
 
-// === EVENT HANDLERS ===
-function attachEvents() {
-  // Swap toggles
-  document.querySelectorAll('[data-swap]').forEach(el => {
-    el.addEventListener('click', () => {
-      const key = el.dataset.swap;
-      state.expandedSwaps[key] = !state.expandedSwaps[key];
-      renderContent();
-    });
-  });
+      document.querySelectorAll('[data-monday]').forEach(el => {
+        el.addEventListener('click', () => {
+          const i = parseInt(el.dataset.monday);
+          state.expandedMonday = state.expandedMonday === i ? null : i;
+          renderContent();
+        });
+      });
 
-  // Monday meal toggles
-  document.querySelectorAll('[data-monday]').forEach(el => {
-    el.addEventListener('click', () => {
-      const i = parseInt(el.dataset.monday);
-      state.expandedMonday = state.expandedMonday === i ? null : i;
-      renderContent();
-    });
-  });
+      document.querySelectorAll('[data-water]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const i = parseInt(el.dataset.water);
+          state.waterCount = (i + 1 === state.waterCount) ? i : i + 1;
+          save('bc_water', state.waterCount);
+          renderContent();
+        });
+      });
 
-  // Water drops
-  document.querySelectorAll('[data-water]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const i = parseInt(el.dataset.water);
-      state.waterCount = (i + 1 === state.waterCount) ? i : i + 1;
-      save('bc_water', state.waterCount);
-      renderContent();
-    });
-  });
+      document.querySelectorAll('[data-supp]').forEach(el => {
+        el.addEventListener('click', () => {
+          const key = el.dataset.supp;
+          state[key] = !state[key];
+          save(key === 'probTaken' ? 'bc_prob' : 'bc_vit', state[key]);
+          renderContent();
+        });
+      });
 
-  // Supplement buttons
-  document.querySelectorAll('[data-supp]').forEach(el => {
-    el.addEventListener('click', () => {
-      const key = el.dataset.supp;
-      state[key] = !state[key];
-      const saveKey = SUPPS_DATA.find(s => s.stateKey === key).saveKey;
-      save(saveKey, state[key]);
-      renderContent();
-    });
-  });
+      const saveBtn = document.getElementById('saveProfileBtn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+          document.querySelectorAll('.stat-input').forEach(input => {
+            const key = input.dataset.key;
+            if (key === 'notes') {
+              state.profile[key] = input.value;
+            } else {
+              state.profile[key] = parseFloat(input.value) || 0;
+            }
+          });
+          saveProfileData(state.profile);
+          saveBtn.innerText = 'Saved Successfully!';
+          saveBtn.style.background = 'var(--bg)';
+          saveBtn.style.border = '1px solid var(--accent)';
+          saveBtn.style.color = 'var(--accent)';
+          setTimeout(() => {
+            renderContent();
+          }, 1000);
+        });
+      }
+    }
 
-  // Goto links
-  document.querySelectorAll('[data-goto]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      state.activeTab = el.dataset.goto;
-      renderTabs();
-      renderContent();
-    });
-  });
-}
-
-// === INIT ===
-renderTabs();
-renderContent();
-</script>
+    // === INIT ===
+    startClock();
+    renderTabs();
+    renderContent();
+  </script>
 </body>
+
 </html>
