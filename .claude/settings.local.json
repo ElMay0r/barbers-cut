@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\luisa\\\\OneDrive\\\\Desktop\\\\betterlife\")",
+      "Bash(git -C \"C:/Users/luisa/OneDrive/Desktop/betterlife\" log --oneline --all)",
+      "Bash(git -C \"/c/Users/luisa/OneDrive/Desktop/betterlife\" log --oneline --all)"
+    ]
+  }
+}

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0a0f1a">
-  <title>Barber's Cut — Meal System</title>
+  <title>BetterLife</title>
   <link rel="manifest" href="manifest.json">
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap"
@@ -57,6 +57,7 @@
       padding-bottom: calc(var(--nav-height) + 20px);
     }
 
+    /* === HEADER === */
     .header {
       background: rgba(17, 24, 39, 0.85);
       backdrop-filter: blur(12px);
@@ -123,6 +124,7 @@
       letter-spacing: 0.5px;
     }
 
+    /* === BOTTOM NAV === */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -182,6 +184,7 @@
       font-weight: 600;
     }
 
+    /* === CONTENT === */
     .content {
       max-width: 600px;
       margin: 0 auto;
@@ -206,6 +209,7 @@
       line-height: 1.5;
     }
 
+    /* === CARDS === */
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -250,6 +254,12 @@
       border-color: rgba(167, 139, 250, 0.25);
     }
 
+    .card-yellow {
+      background: var(--yellow-dim);
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+
+    /* === BADGES === */
     .badge {
       font-size: 11px;
       font-weight: 600;
@@ -278,6 +288,7 @@
       background: var(--purple-dim);
     }
 
+    /* === MACROS === */
     .macro-row {
       display: flex;
       gap: 12px;
@@ -303,6 +314,7 @@
       color: var(--red);
     }
 
+    /* === SWAPS === */
     .swap-header {
       cursor: pointer;
       padding: 0;
@@ -327,7 +339,7 @@
       margin-top: 8px;
     }
 
-    /* Form Elements */
+    /* === FORM ELEMENTS === */
     .input-group {
       margin-bottom: 16px;
     }
@@ -393,6 +405,7 @@
       opacity: 0.8;
     }
 
+    /* === WATER === */
     .water-grid {
       display: flex;
       flex-wrap: wrap;
@@ -423,6 +436,7 @@
       opacity: 0.4;
     }
 
+    /* === SUPPLEMENTS === */
     .supp-btn {
       display: flex;
       align-items: center;
@@ -437,6 +451,7 @@
       width: 100%;
       font-family: 'DM Sans', sans-serif;
       color: var(--text);
+      text-align: left;
     }
 
     .supp-btn.taken {
@@ -463,6 +478,116 @@
       color: #fff;
     }
 
+    /* === DO THIS NOW === */
+    .do-this-now {
+      background: var(--card);
+      border: 1px solid var(--accent-dim);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* === PROGRESS RING === */
+    .progress-ring-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* === QUICK ACTION BUTTONS === */
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .quick-btn {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 8px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.15s;
+      color: var(--text);
+    }
+
+    .quick-btn:active {
+      transform: scale(0.95);
+      background: var(--card-hover);
+    }
+
+    .quick-btn-icon {
+      font-size: 24px;
+    }
+
+    .quick-btn-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+
+    /* === OVERLAY / MODAL === */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      transition: opacity 0.2s;
+    }
+
+    .overlay.hidden {
+      display: none;
+    }
+
+    .overlay-content {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-radius: 16px 16px 0 0;
+      width: 100%;
+      max-width: 600px;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    /* === MEAL FILTER === */
+    .meal-filter-btn {
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .meal-filter-btn.active {
+      background: var(--accent-glow) !important;
+      color: var(--accent) !important;
+    }
+
+    /* === UTILITIES === */
     .hidden {
       display: none;
     }
@@ -482,6 +607,25 @@
     .animate-in {
       animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    /* Select styling */
+    select.input-field {
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -490,8 +634,8 @@
   <div class="header">
     <div class="header-inner">
       <div class="header-title-box">
-        <h1><span>✂</span> BC SYSTEM</h1>
-        <p>LIVE MEAL & PREP GUIDE</p>
+        <h1><span>♥</span> BETTERLIFE</h1>
+        <p>YOUR PERSONAL HEALTH SYSTEM</p>
       </div>
       <div class="clock-widget">
         <div class="clock-time" id="liveTime">--:--</div>
@@ -506,426 +650,22 @@
     <div class="bottom-nav-inner" id="navContainer"></div>
   </div>
 
-  <script>
-    // === PROFILE LOGIC ===
-    function getProfileData() {
-      return JSON.parse(localStorage.getItem('bc_profile') || '{"age":25,"weight":180,"height":70,"target":165,"notes":"","macros":{"p":150,"c":120,"f":50}}');
-    }
-    function saveProfileData(data) {
-      localStorage.setItem('bc_profile', JSON.stringify(data));
-    }
+  <!-- Overlay / Modal -->
+  <div class="overlay hidden" id="overlay">
+    <div class="overlay-content" id="overlayContent"></div>
+  </div>
 
-    function calculateTDEE(weightLbs, heightInches, age) {
-      // Mifflin-St Jeor Equation roughly for men
-      const weightKg = weightLbs * 0.453592;
-      const heightCm = heightInches * 2.54;
-      const bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5;
-      return Math.round(bmr * 1.55); // Moderate activity (barber)
-    }
-
-    // === STATE ===
-    const state = {
-      activeTab: 'today',
-      waterCount: parseInt(localStorage.getItem('bc_water') || '0'),
-      probTaken: localStorage.getItem('bc_prob') === 'true',
-      vitTaken: localStorage.getItem('bc_vit') === 'true',
-      expandedSwaps: {},
-      expandedMonday: null,
-      lastDate: localStorage.getItem('bc_date') || '',
-      profile: getProfileData()
-    };
-
-    const todayStr = new Date().toDateString();
-    if (state.lastDate !== todayStr) {
-      state.waterCount = 0;
-      state.probTaken = false;
-      state.vitTaken = false;
-      localStorage.setItem('bc_water', '0');
-      localStorage.setItem('bc_prob', 'false');
-      localStorage.setItem('bc_vit', 'false');
-      localStorage.setItem('bc_date', todayStr);
-    }
-
-    function save(key, val) {
-      localStorage.setItem(key, typeof val === 'object' ? JSON.stringify(val) : String(val));
-    }
-
-    // === DATA ===
-    const TABS = [
-      { id: 'today', label: 'Today', icon: '📍' },
-      { id: 'swaps', label: 'Swaps', icon: '🔄' },
-      { id: 'prep', label: 'Prep', icon: '🔪' },
-      { id: 'supps', label: 'Supps', icon: '💊' },
-      { id: 'profile', label: 'Profile', icon: '👤' }
-    ];
-
-    const WORK_MEALS = [
-      {
-        id: 'morning', timeStart: 0, timeEnd: 11, label: '☕ Morning (Before 11 AM)',
-        current: { name: "Dunkin' Latte", cals: 350, protein: 8, carbs: 56, fat: 10, sugar: '48g' },
-        swaps: [
-          { name: "Dunkin' Iced Coffee w/ Cream", cals: 50, protein: 1, carbs: 2, fat: 4, sugar: '0g', tip: 'No swirl, no liquid sugar. Save 300 cals.', difficulty: '🟢 Easy' },
-          { name: "Dunkin' Wake-Up Wrap", cals: 180, protein: 10, carbs: 14, fat: 9, sugar: '1g', tip: 'Eat with unsweetened coffee. Fast & solid.', difficulty: '🟢 Easy' }
-        ]
-      },
-      {
-        id: 'lunch', timeStart: 11, timeEnd: 16, label: '🥙 Mid-Day (11 AM - 4 PM)',
-        current: { name: 'Fried Wrap / Hero', cals: 780, protein: 35, carbs: 62, fat: 42, sugar: '8g' },
-        swaps: [
-          { name: 'Deli Grilled Chicken Salad', cals: 380, protein: 38, carbs: 12, fat: 18, sugar: '2g', tip: 'Oil & vinegar. Same speed as a wrap.', difficulty: '🟢 Easy' },
-          { name: 'Chick-fil-A Grilled Nuggets (12)', cals: 310, protein: 38, carbs: 16, fat: 10, sugar: '3g', tip: 'Plus side salad = top tier fast food cut.', difficulty: '🟢 Easy' }
-        ]
-      },
-      {
-        id: 'dinner', timeStart: 16, timeEnd: 24, label: '🌙 Dinner (After 4 PM)',
-        current: { name: 'McD/Pizza/UberEats', cals: 1100, protein: 35, carbs: 110, fat: 55, sugar: '30g' },
-        swaps: [
-          { name: '2 McChickens (No Mayo)', cals: 530, protein: 28, carbs: 62, fat: 18, sugar: '6g', tip: 'Skip fries/soda. Save ~600 cals vs Big Mac meal.', difficulty: '🟢 Easy' },
-          { name: 'Pizza: 2 Slices + Side Salad', cals: 580, protein: 24, carbs: 64, fat: 24, sugar: '8g', tip: 'Eat salad BEFORE pizza. Stop at 2 slices.', difficulty: '🟡 Medium' }
-        ]
-      }
-    ];
-
-    const MONDAY_MEALS = [
-      { time: 8, label: '8:00 AM', name: 'Oatmeal + Almonds + Coffee', cals: 340, p: 14, c: 44, f: 13, info: 'Oats, almonds, cinnamon.' },
-      { time: 10, label: '10:00 AM', name: '💊 Probiotic + Multivitamin', cals: 0, p: 0, c: 0, f: 0, info: 'Take with full glass of water.' },
-      { time: 11, label: '11:00 AM', name: 'Scrambled Eggs + Spinach', cals: 280, p: 22, c: 4, f: 18, info: '3 eggs in olive oil.' },
-      { time: 14, label: '2:00 PM', name: 'Grilled Chicken + Spinach Salad', cals: 400, p: 46, c: 6, f: 20, info: '6oz chicken. Bulk cook now!' },
-      { time: 17, label: '5:00 PM', name: 'Greek Yogurt + Almonds', cals: 180, p: 20, c: 8, f: 7, info: 'Quick and clean.' },
-      { time: 19, label: '7:30 PM', name: 'Chicken + Eggs', cals: 380, p: 40, c: 18, f: 14, info: 'Leftovers.' },
-    ];
-
-    // === LIVE CLOCK ===
-    function startClock() {
-      const updateTime = () => {
-        const now = new Date();
-        const liveTime = document.getElementById('liveTime');
-        const liveDate = document.getElementById('liveDate');
-        if (liveTime) liveTime.innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-        if (liveDate) liveDate.innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-      };
-      updateTime();
-      setInterval(updateTime, 10000);
-    }
-
-    // === RENDER ENGINE ===
-    function renderTabs() {
-      const container = document.getElementById('navContainer');
-      if (!container) return;
-      container.innerHTML = TABS.map(t =>
-        `<button class="nav-item ${state.activeTab === t.id ? 'active' : ''}" data-tab="${t.id}">
-      <div class="nav-icon">${t.icon}</div>
-      <div class="nav-label">${t.label}</div>
-    </button>`
-      ).join('');
-      container.querySelectorAll('.nav-item').forEach(btn => {
-        btn.addEventListener('click', () => {
-          state.activeTab = btn.dataset.tab;
-          renderTabs();
-          renderContent();
-          window.scrollTo(0, 0);
-        });
-      });
-    }
-
-    function renderContent() {
-      const el = document.getElementById('content');
-      if (!el) return;
-      el.className = 'content animate-in';
-      switch (state.activeTab) {
-        case 'today': el.innerHTML = renderToday(); break;
-        case 'swaps': el.innerHTML = renderSwaps(); break;
-        case 'prep': el.innerHTML = renderPrep(); break;
-        case 'supps': el.innerHTML = renderSupps(); break;
-        case 'profile': el.innerHTML = renderProfile(); break;
-      }
-      attachEvents();
-    }
-
-    function renderToday() {
-      const now = new Date();
-      const day = now.getDay(); // 0 Sun, 1 Mon, 2 Tue...
-      const hour = now.getHours();
-
-      let html = `<h2>Today's Live Plan</h2>
-    <p class="subtitle">Your active requirements based on the current time.</p>`;
-
-      // Monday is Off/Prep day
-      if (day === 1) {
-        html += `<div class="card card-accent"><h3 style="color:var(--accent)">🏠 MONDAY PREP DAY</h3><p style="font-size:12px;color:var(--text-dim);margin-top:4px">Cook everything today to survive the week.</p></div>`;
-
-        MONDAY_MEALS.forEach((meal, i) => {
-          const isNow = (hour >= meal.time && hour < meal.time + 2) || (i === 0 && hour < 8) || (i === MONDAY_MEALS.length - 1 && hour >= 21);
-          html += `
-        <div class="card ${isNow ? 'highlight-now' : ''} ${meal.name.includes('💊') ? 'card-purple' : ''}" style="cursor:pointer" data-monday="${i}">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start">
-            <div>
-              <div style="font-size:11px;color:var(--text-muted);font-weight:700">${meal.label}</div>
-              <div style="font-size:15px;font-weight:600;margin-top:4px">${meal.name}</div>
-            </div>
-            ${meal.cals ? `<div style="font-size:16px;font-weight:700;color:var(--accent)">${meal.cals} <span style="font-size:10px;color:var(--text-muted)">cal</span></div>` : ''}
-          </div>
-          ${meal.cals ? `<div class="macro-row"><span class="macro-p">P: ${meal.p}g</span><span class="macro-c">C: ${meal.c}g</span><span class="macro-f">F: ${meal.f}g</span></div>` : ''}
-          <div class="${state.expandedMonday === i || isNow ? '' : 'hidden'}" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:13px;color:var(--text-dim);line-height:1.5">
-            ${meal.info}
-          </div>
-        </div>`;
-        });
-      } else {
-        html += `<div class="card card-yellow"><h3 style="color:var(--text)">✂ WORK DAY</h3><p style="font-size:12px;color:var(--text-dim);margin-top:4px">Stick to the prepped snacks and smart fast-food swaps.</p></div>`;
-
-        // Workday view based on WORK_MEALS
-        WORK_MEALS.forEach((meal, i) => {
-          const isNow = (hour >= meal.timeStart && hour < meal.timeEnd);
-          const isPast = hour >= meal.timeEnd;
-          html += `
-        <div class="card ${isNow ? 'highlight-now' : (isPast ? 'opacity-50' : '')}">
-          <div style="font-size:11px;color:var(--text-muted);font-weight:700;margin-bottom:8px">${meal.label}</div>
-          <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card-hover);padding:10px;border-radius:8px">
-            <div style="font-size:14px;font-weight:600">SWAP 1: ${meal.swaps[0].name}</div>
-            <div style="font-size:14px;font-weight:700;color:var(--accent)">${meal.swaps[0].cals}</div>
-          </div>
-          ${meal.swaps[1] ? `
-          <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;background:var(--card-hover);padding:10px;border-radius:8px">
-            <div style="font-size:14px;font-weight:600">SWAP 2: ${meal.swaps[1].name}</div>
-            <div style="font-size:14px;font-weight:700;color:var(--accent)">${meal.swaps[1].cals}</div>
-          </div>` : ''}
-          ${isNow ? `<div style="margin-top:10px;font-size:12px;color:var(--text-dim);background:var(--accent-glow);color:var(--accent);padding:10px;border-radius:8px;font-weight:600">💡 TIP: ${meal.swaps[0].tip}</div>` : ''}
-        </div>`;
-        });
-      }
-
-      // Common trackers on Today view
-      html += `
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h3>💧 Water Tracker</h3>
-        <span style="color:var(--water);font-weight:700;font-size:14px">${state.waterCount} / 10 drops</span>
-      </div>
-      <div class="water-grid">
-        ${Array.from({ length: 10 }).map((_, i) => `<div class="water-drop ${i < state.waterCount ? 'filled' : 'empty'}" data-water="${i}">💧</div>`).join('')}
-      </div>
-    </div>
-    
-    <div class="card card-purple">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <h3>💊 Daily Supplements</h3>
-        <span style="font-size:12px;color:var(--purple);font-weight:600">${(state.probTaken && state.vitTaken) ? '✅ Done' : 'Pending'}</span>
-      </div>
-      <div style="display:flex;gap:10px">
-        <button class="supp-btn ${state.probTaken ? 'taken' : ''}" data-supp="probTaken" style="flex:1;margin:0;padding:12px">
-          <span style="font-size:14px;font-weight:600">Probiotic</span>
-        </button>
-        <button class="supp-btn ${state.vitTaken ? 'taken' : ''}" data-supp="vitTaken" style="flex:1;margin:0;padding:12px">
-          <span style="font-size:14px;font-weight:600">Vitamin</span>
-        </button>
-      </div>
-    </div>
-  `;
-      return html;
-    }
-
-    function renderProfile() {
-      const p = state.profile;
-      const tdee = calculateTDEE(p.weight, p.height, p.age);
-      const cutTarget = tdee - 500; // 500 cal deficit
-
-      let html = `
-    <h2>👤 Patient Profile</h2>
-    <p class="subtitle">Core metrics, targets, and Trainer/Dietitian notes.</p>
-    
-    <div class="card">
-      <h3 style="margin-bottom:12px;color:var(--accent)">Physiological Data</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="input-group">
-          <label>Age</label>
-          <input type="number" class="input-field stat-input" data-key="age" value="${p.age}">
-        </div>
-        <div class="input-group">
-          <label>Height (in)</label>
-          <input type="number" class="input-field stat-input" data-key="height" value="${p.height}">
-        </div>
-        <div class="input-group">
-          <label>Current Weight (lbs)</label>
-          <input type="number" class="input-field stat-input" data-key="weight" value="${p.weight}">
-        </div>
-        <div class="input-group">
-          <label>Goal Weight (lbs)</label>
-          <input type="number" class="input-field stat-input" data-key="target" value="${p.target}">
-        </div>
-      </div>
-    </div>
-    
-    <div class="card card-accent">
-      <h3 style="margin-bottom:16px;color:var(--text)">📊 Energy Profile (Calculated)</h3>
-      <div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:10px">
-        <span style="color:var(--text-muted);font-weight:600">Maint. Calories (TDEE)</span>
-        <span style="font-weight:700;font-size:16px">${tdee} kcal</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:16px">
-        <span style="color:var(--text-dim);font-weight:600">Deficit Target (-500)</span>
-        <span style="color:var(--accent);font-weight:700;font-size:18px">${cutTarget} kcal</span>
-      </div>
-      
-      <h3 style="margin-bottom:10px;font-size:12px;text-transform:uppercase;color:var(--text-muted)">Daily Macro Directives</h3>
-      <div class="macro-row" style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;justify-content:space-around">
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase">Protein</div>
-          <div style="color:var(--protein);font-size:18px">${p.macros.p}g</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase">Carbs</div>
-          <div style="color:var(--carbs);font-size:18px">${p.macros.c}g</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase">Fat</div>
-          <div style="color:var(--fat);font-size:18px">${p.macros.f}g</div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="card" style="border-color:var(--yellow-dim);background:rgba(245,158,11,0.02)">
-      <h3 style="margin-bottom:12px;color:var(--yellow)">📋 Trainer / Dietitian Notes</h3>
-      <textarea class="trainer-notes stat-input" data-key="notes" placeholder="Add specific instructions, protocol adjustments, or medical notes here...">${p.notes}</textarea>
-    </div>
-    
-    <button class="btn-primary" id="saveProfileBtn">Save Profile Changes</button>
-  `;
-      return html;
-    }
-
-    function renderSwaps() {
-      let html = `<h2>Master Swaps Guide</h2><p class="subtitle">Detailed fast-food and restaurant alternatives.</p>`;
-      WORK_MEALS.forEach(cat => {
-        html += `<h3 style="color:var(--text-dim);margin:20px 0 10px;text-transform:uppercase;font-size:12px;letter-spacing:0.5px">${cat.label}</h3>`;
-
-        cat.swaps.forEach((sw, i) => {
-          const key = cat.id + '-' + i;
-          const isOpen = state.expandedSwaps[key];
-          html += `
-        <div class="card" style="padding:16px;cursor:pointer" data-swap="${key}">
-          <div class="swap-header">
-            <div style="flex:1">
-              <div style="font-size:16px;font-weight:700;color:var(--text)">${sw.name}</div>
-              <div style="display:flex;gap:6px;margin-top:8px">
-                <span class="badge badge-green">${sw.cals} cal</span>
-                <span class="badge badge-muted">${sw.sugar} sug</span>
-              </div>
-            </div>
-            <div style="color:var(--text-muted);font-size:24px">${isOpen ? '−' : '+'}</div>
-          </div>
-          <div class="swap-detail ${isOpen ? '' : 'hidden'}">
-            <div class="macro-row" style="margin-bottom:12px">
-              <span class="macro-p">P: ${sw.protein}g</span>
-              <span class="macro-c">C: ${sw.carbs}g</span>
-              <span class="macro-f">F: ${sw.fat}g</span>
-            </div>
-            <div class="swap-tip">💡 ${sw.tip}</div>
-          </div>
-        </div>`;
-        });
-      });
-      return html;
-    }
-
-    function renderSupps() {
-      return `<h2>Supplement Log</h2><p class="subtitle">Consistency is everything.</p>
-    <div class="card card-purple" style="margin-top:20px">
-      <h3 style="margin-bottom:10px;color:var(--purple)">Spring Valley Probiotic</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Take 1 capsule every morning with food. Crucial for restoring gut health and digestion after your reset phase.</p>
-    </div>
-    <div class="card card-purple">
-      <h3 style="margin-bottom:10px;color:var(--purple)">Equate Multivitamin</h3>
-      <p style="font-size:13px;color:var(--text-dim);line-height:1.6">Take 1 tablet with your largest meal to prevent micronutrient deficiencies while in a caloric deficit.</p>
-    </div>`;
-    }
-
-    function renderPrep() {
-      return `<h2>Weekly Prep Instructions</h2><p class="subtitle">Execute this every Monday to set up the entire work week.</p>
-    <div class="card">
-      <h3 style="margin-bottom:12px">Tasks</h3>
-      <ul style="list-style:none">
-        <li style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)">
-          <div style="font-weight:600;font-size:15px;margin-bottom:4px">🍗 Bake 3 lbs Chicken</div>
-          <div style="font-size:13px;color:var(--text-dim)">Slice and pack into 5 containers. Takes ~25 min.</div>
-        </li>
-        <li style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)">
-          <div style="font-weight:600;font-size:15px;margin-bottom:4px">🥚 Boil 10 Eggs</div>
-          <div style="font-size:13px;color:var(--text-dim)">Peel and pack. Eat 2 immediately when you arrive home to prevent over-ordering delivery. Takes ~15 min.</div>
-        </li>
-        <li>
-          <div style="font-weight:600;font-size:15px;margin-bottom:4px">🥜 Portion Almonds</div>
-          <div style="font-size:13px;color:var(--text-dim)">Make 7 small grab bags. Snack between clients.</div>
-        </li>
-      </ul>
-    </div>`;
-    }
-
-    // === EVENT HANDLERS ===
-    function attachEvents() {
-      document.querySelectorAll('[data-swap]').forEach(el => {
-        el.addEventListener('click', () => {
-          const key = el.dataset.swap;
-          state.expandedSwaps[key] = !state.expandedSwaps[key];
-          renderContent();
-        });
-      });
-
-      document.querySelectorAll('[data-monday]').forEach(el => {
-        el.addEventListener('click', () => {
-          const i = parseInt(el.dataset.monday);
-          state.expandedMonday = state.expandedMonday === i ? null : i;
-          renderContent();
-        });
-      });
-
-      document.querySelectorAll('[data-water]').forEach(el => {
-        el.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const i = parseInt(el.dataset.water);
-          state.waterCount = (i + 1 === state.waterCount) ? i : i + 1;
-          save('bc_water', state.waterCount);
-          renderContent();
-        });
-      });
-
-      document.querySelectorAll('[data-supp]').forEach(el => {
-        el.addEventListener('click', () => {
-          const key = el.dataset.supp;
-          state[key] = !state[key];
-          save(key === 'probTaken' ? 'bc_prob' : 'bc_vit', state[key]);
-          renderContent();
-        });
-      });
-
-      const saveBtn = document.getElementById('saveProfileBtn');
-      if (saveBtn) {
-        saveBtn.addEventListener('click', () => {
-          document.querySelectorAll('.stat-input').forEach(input => {
-            const key = input.dataset.key;
-            if (key === 'notes') {
-              state.profile[key] = input.value;
-            } else {
-              state.profile[key] = parseFloat(input.value) || 0;
-            }
-          });
-          saveProfileData(state.profile);
-          saveBtn.innerText = 'Saved Successfully!';
-          saveBtn.style.background = 'var(--bg)';
-          saveBtn.style.border = '1px solid var(--accent)';
-          saveBtn.style.color = 'var(--accent)';
-          setTimeout(() => {
-            renderContent();
-          }, 1000);
-        });
-      }
-    }
-
-    // === INIT ===
-    startClock();
-    renderTabs();
-    renderContent();
-  </script>
+  <!-- Scripts (load order matters) -->
+  <script src="js/data.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/coaching.js"></script>
+  <script src="js/tab-today.js"></script>
+  <script src="js/tab-nutrition.js"></script>
+  <script src="js/tab-body.js"></script>
+  <script src="js/tab-routine.js"></script>
+  <script src="js/tab-me.js"></script>
+  <script src="js/app.js"></script>
 </body>
 
 </html>
